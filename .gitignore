@@ -1,0 +1,14 @@
+# Python virtual environments
+/ecg_env/
+.venv/
+venv/
+env/
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
