@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECG Arrhythmia Detection</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <div class="bg-shape bg-shape-a"></div>
+    <div class="bg-shape bg-shape-b"></div>
+
+    <main class="page">
+        <section class="hero">
+            <p class="eyebrow"></p>
+            <h1>ECG Arrhythmia Detection and Explainability</h1>
+            <p class="subtitle">
+                Upload an ECG signal, choose a model, and inspect both prediction and highlighted waveform regions.
+            </p>
+        </section>
+
+        <section class="card">
+            <form action="/predict" method="post" enctype="multipart/form-data" class="form-grid">
+                <label class="field">
+                    <span>Upload ECG File(s) (.csv, .txt, .npy, or WFDB: .dat + .hea together)</span>
+                    <input type="file" name="ecg_file" accept=".csv,.txt,.npy,.dat,.hea,.atr,.xws,.at_" multiple required />
+                </label>
+
+                <label class="field">
+                    <span>Select Model</span>
+                    <select name="model_type" required>
+                        <option value="cnn" {% if selected_model == 'cnn' %}selected{% endif %}>CNN</option>
+                        <option value="lstm" {% if selected_model == 'lstm' %}selected{% endif %}>LSTM</option>
+                        <option value="hybrid" {% if selected_model == 'hybrid' %}selected{% endif %}>Hybrid (CNN + LSTM)</option>
+                    </select>
+                </label>
+
+                <button type="submit" class="cta">Run Prediction</button>
+            </form>
+        </section>
+
+        {% if error %}
+        <section class="alert error">
+            <strong>Prediction failed:</strong> {{ error }}
+        </section>
+        {% endif %}
+
+        {% if result %}
+        <section class="card result">
+            <div class="result-header">
+                <h2>Result Summary</h2>
+                <p class="meta">File: {{ result.file_name }}</p>
+            </div>
+
+            <div class="stats">
+                <article>
+                    <h3>Model</h3>
+                    <p>{{ result.model }}</p>
+                </article>
+                <article>
+                    <h3>Class</h3>
+                    <p>{{ result.class_name }} ({{ result.class_id }})</p>
+                </article>
+                <article>
+                    <h3>Confidence</h3>
+                    <p>{{ result.confidence }}</p>
+                </article>
+            </div>
+
+            <p class="explain-text">{{ result.explanation }}</p>
+
+            <div class="plots">
+                <figure>
+                    <img alt="ECG plot" src="data:image/png;base64,{{ result.signal_plot_b64 }}" />
+                    <figcaption>ECG Signal</figcaption>
+                </figure>
+                <figure>
+                    <img alt="Explainability heatmap" src="data:image/png;base64,{{ result.explain_plot_b64 }}" />
+                    <figcaption>Explainability Map</figcaption>
+                </figure>
+            </div>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

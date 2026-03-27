@@ -1,7 +1,67 @@
+
+#  Core Data Libraries
 numpy==1.26.4
 pandas==2.2.1
+
+
+#  Visualization
 matplotlib==3.8.3
+seaborn==0.13.2
+
+
+#  ECG Processing
 wfdb==4.1.2
+scipy==1.12.0
+
+
+#  Machine Learning
+scikit-learn
+
+
+#  Deep Learning
+torch
+tensorflow-macos
+tensorflow-metal
+
+
+# Explainable AI (Future )
+shap==0.44.1
+
+
+#  Web App (Streamlit)
+streamlit==1.33.0
+
+#  Web App (FastAPI)
+fastapi==0.115.5
+uvicorn==0.32.1
+jinja2==3.1.4
+python-multipart==0.0.17
+
+
+#  Utilities
+
+tqdm==4.66.2
+
+
+#  Development / Notebook
+
 jupyter==1.0.0
-scikit-learn==1.4.1
-tensorflow==2.15.0
+ipykernel==6.29.3
+
+
+
+# ```
+# | Category            | Why needed                   |
+# | ------------------- | ---------------------------- |
+# | numpy, pandas       | Data handling                |
+# | matplotlib, seaborn | Graphs & plots               |
+# | wfdb                | Read ECG dataset             |
+# | scipy               | Signal filtering             |
+# | sklearn             | Train-test split, encoding   |
+# | tensorflow          | CNN/LSTM models              |
+# | shap                | Explain model predictions  |
+# | streamlit           | Build website                |
+# | tqdm                | Progress bar                 |
+# | jupyter             | Notebook work                |
+
+# ```
