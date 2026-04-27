@@ -16,20 +16,31 @@ from src.explainability.gradcam import GradCAM
 
 
 # 🔥 Explanation function
-def generate_explanation(pred_class):
+def generate_explanation(predicted_class):
     explanations = {
-        0: "The model predicts a NORMAL beat. It focuses on regular and consistent waveform patterns, indicating stable cardiac activity.",
-
-        1: "The model predicts SUPRAVENTRICULAR arrhythmia. It detects irregular timing and slight waveform distortions.",
-
-        2: "The model predicts VENTRICULAR arrhythmia. It focuses on abnormal spikes and distorted QRS complexes.",
-
-        3: "The model predicts a FUSION beat. It detects mixed waveform characteristics from normal and abnormal signals.",
-
-        4: "The model predicts UNKNOWN class. The signal does not clearly match known arrhythmia patterns."
+        0: (
+            "The model predicts a NORMAL beat. It focuses on regular and "
+            "consistent waveform patterns, indicating stable cardiac activity."
+        ),
+        1: (
+            "The model predicts SUPRAVENTRICULAR arrhythmia. It detects "
+            "irregular timing and slight waveform distortions."
+        ),
+        2: (
+            "The model predicts VENTRICULAR arrhythmia. It focuses on "
+            "abnormal spikes and distorted QRS complexes."
+        ),
+        3: (
+            "The model predicts a FUSION beat. It detects mixed waveform "
+            "characteristics from normal and abnormal signals."
+        ),
+        4: (
+            "The model predicts UNKNOWN class. The signal does not clearly "
+            "match known arrhythmia patterns."
+        ),
     }
 
-    return explanations.get(pred_class, "No explanation available.")
+    return explanations.get(predicted_class, "No explanation available.")
 
 
 # 🔹 STEP 1: Load Data

@@ -8,30 +8,32 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 from src.data.loader import load_dataset
 from src.utils.label_encoder import encode_labels, filter_data
-from src.preprocessing.preprocess import preprocess_batch, reshape_for_lstm
+from src.preprocessing.preprocess import prepare_for_lstm
 from src.models.lstm import LSTMModel
 
 
 BATCH_SIZE = 64
 EPOCHS = 10
 LR = 0.001
+NUM_CLASSES = 5
 
 
 def compute_class_weights(y):
-    class_counts = np.bincount(y)
+    class_counts = np.bincount(y, minlength=NUM_CLASSES)
     total = len(y)
-    weights = total / (len(class_counts) * class_counts)
+    weights = np.zeros(NUM_CLASSES, dtype=np.float32)
+    nonzero_classes = class_counts > 0
+    weights[nonzero_classes] = total / (NUM_CLASSES * class_counts[nonzero_classes])
     return torch.tensor(weights, dtype=torch.float)
 
 
 def prepare_data():
-    X, y = load_dataset()
+    X, y = load_dataset(segment_length=180)
 
     X, y = filter_data(X, y)
     y = encode_labels(y)
 
-    X = preprocess_batch(X)
-    X = reshape_for_lstm(X)
+    X = prepare_for_lstm(X)
 
     return X, y
 
@@ -40,7 +42,7 @@ def train():
     print("Loading data...")
     X, y = prepare_data()
 
-    X_train, X_test, y_train, y_test = train_test_split(
+    X_train, _, y_train, _ = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
 
@@ -52,7 +54,7 @@ def train():
 
     model = LSTMModel()
 
-    # 🔥 Use class weights
+    #  Use class weights
     class_weights = compute_class_weights(y_train.numpy())
     criterion = nn.CrossEntropyLoss(weight=class_weights)
 
@@ -83,4 +85,4 @@ def train():
 
 
 if __name__ == "__main__":
-    train() 
+    train()

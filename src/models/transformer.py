@@ -1,10 +1,9 @@
-import torch
 import torch.nn as nn
 
 
 class ECGTransformer(nn.Module):
     def __init__(self, num_classes=5):
-        super(ECGTransformer, self).__init__()
+        super().__init__()
 
         # Step 1: Project input (1 → 64)
         self.embedding = nn.Linear(1, 64)

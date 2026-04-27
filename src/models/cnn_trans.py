@@ -1,9 +1,8 @@
-import torch
 import torch.nn as nn
 
 class CNNTransformer(nn.Module):
     def __init__(self, num_classes=5):
-        super(CNNTransformer, self).__init__()
+        super().__init__()
 
         # 🔹 CNN Feature Extractor
         self.cnn = nn.Sequential(

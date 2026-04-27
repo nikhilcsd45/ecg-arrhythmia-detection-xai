@@ -17,18 +17,17 @@ from sklearn.model_selection import train_test_split
 
 from src.data.loader import load_dataset
 from src.utils.label_encoder import encode_labels, filter_data
-from src.preprocessing.preprocess import preprocess_batch, reshape_for_lstm
+from src.preprocessing.preprocess import prepare_for_lstm
 from src.models.lstm import LSTMModel
 
 
 def prepare_data():
-    X, y = load_dataset()
+    X, y = load_dataset(segment_length=180)
 
     X, y = filter_data(X, y)
     y = encode_labels(y)
 
-    X = preprocess_batch(X)
-    X = reshape_for_lstm(X)
+    X = prepare_for_lstm(X)
 
     return X, y
 
@@ -61,7 +60,7 @@ def evaluate():
     print("Loading data...")
     X, y = prepare_data()
 
-    X_train, X_test, y_train, y_test = train_test_split(
+    _, X_test, _, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
 
@@ -69,7 +68,7 @@ def evaluate():
 
     # Load LSTM model
     model = LSTMModel()
-    model.load_state_dict(torch.load("models/lstm.pth"))
+    model.load_state_dict(torch.load("models/lstm.pth", map_location="cpu"))
     model.eval()
 
     print("Evaluating LSTM...")

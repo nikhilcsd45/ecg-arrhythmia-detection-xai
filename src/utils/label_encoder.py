@@ -47,9 +47,9 @@ def filter_data(X, y):
     filtered_X = []
     filtered_y = []
 
-    for i in range(len(y)):
-        if y[i] in AAMI_MAP:
-            filtered_X.append(X[i])
-            filtered_y.append(y[i])
+    for signal, label in zip(X, y):
+        if label in AAMI_MAP:
+            filtered_X.append(signal)
+            filtered_y.append(label)
 
     return np.array(filtered_X), np.array(filtered_y)

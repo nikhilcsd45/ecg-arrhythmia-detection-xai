@@ -29,10 +29,19 @@
                 <label class="field">
                     <span>Select Model</span>
                     <select name="model_type" required>
-                        <option value="cnn" {% if selected_model == 'cnn' %}selected{% endif %}>CNN</option>
-                        <option value="lstm" {% if selected_model == 'lstm' %}selected{% endif %}>LSTM</option>
-                        <option value="hybrid" {% if selected_model == 'hybrid' %}selected{% endif %}>Hybrid (CNN + LSTM)</option>
+                        {% for model in model_options %}
+                        <option
+                            value="{{ model.value }}"
+                            title="{{ model.status }}"
+                            {% if selected_model == model.value %}selected{% endif %}
+                            {% if not model.available %}disabled{% endif %}
+                        >
+                            {{ model.label }}{% if not model.available %} - unavailable{% endif %}
+                        </option>
+                        {% endfor %}
                     </select>
+                    <small class="hint">
+                    </small>
                 </label>
 
                 <button type="submit" class="cta">Run Prediction</button>
@@ -50,6 +59,7 @@
             <div class="result-header">
                 <h2>Result Summary</h2>
                 <p class="meta">File: {{ result.file_name }}</p>
+                <p class="meta">Explanation source: {{ result.explanation_source }}</p>
             </div>
 
             <div class="stats">
@@ -67,7 +77,15 @@
                 </article>
             </div>
 
-            <p class="explain-text">{{ result.explanation }}</p>
+            <div class="explain-text">
+                <ul class="summary-points">
+                    {% for item in result.explanation_points %}
+                    <li>
+                        <strong>{{ item.label }}:</strong> {{ item.text }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
             <div class="plots">
                 <figure>

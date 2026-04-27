@@ -3,6 +3,7 @@
 .venv/
 venv/
 env/
+.env
 
 # Python cache and build artifacts
 __pycache__/
@@ -12,3 +13,8 @@ __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
 .DS_Store
+
+# Generated artifacts
+outputs/
+results/
+graph_matrixs/

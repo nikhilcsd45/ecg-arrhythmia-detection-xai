@@ -1,11 +1,10 @@
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
 class CNNModel(nn.Module):
     def __init__(self, num_classes=5):
-        super(CNNModel, self).__init__()
+        super().__init__()
 
         self.conv1 = nn.Conv1d(1, 32, kernel_size=5)
         self.pool = nn.MaxPool1d(2)

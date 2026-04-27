@@ -1,10 +1,9 @@
-import torch
 import torch.nn as nn
 
 
 class LSTMModel(nn.Module):
     def __init__(self, num_classes=5):
-        super(LSTMModel, self).__init__()
+        super().__init__()
 
         self.lstm = nn.LSTM(
             input_size=1,

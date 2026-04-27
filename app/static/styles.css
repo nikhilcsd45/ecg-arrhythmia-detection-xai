@@ -116,6 +116,13 @@ select {
     background: #ffffff;
 }
 
+.hint {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
 .cta {
     border: none;
     border-radius: 12px;
@@ -197,6 +204,20 @@ select {
     background: #fffbeb;
     border-radius: 8px;
     color: #78350f;
+}
+
+.summary-points {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.summary-points li {
+    margin: 0 0 8px;
+    line-height: 1.5;
+}
+
+.summary-points li:last-child {
+    margin-bottom: 0;
 }
 
 .plots {
